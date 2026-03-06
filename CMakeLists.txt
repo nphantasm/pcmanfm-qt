@@ -26,11 +26,12 @@ find_package(Qt6LinguistTools ${QT_MINIMUM_VERSION} REQUIRED)
 find_package(Qt6Widgets ${QT_MINIMUM_VERSION} REQUIRED)
 find_package(fm-qt6 ${LIBFMQT_MINIMUM_VERSION} REQUIRED)
 find_package(lxqt2-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
-find_package(LayerShellQt ${SHELLQT_MINIMUM_VERSION} REQUIRED)
+find_package(LayerShellQt ${SHELLQT_MINIMUM_VERSION} OPTIONAL)
 
 message(STATUS "Building ${PROJECT_NAME} with Qt ${Qt6Core_VERSION}")
 
 option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files" OFF)
+option(ENABLE_LAYERSHELL_SUPPORT "Turn on support for Wayland desktop support using layer-shell-qt" ${LayerShellQt_FOUND})
 include(GNUInstallDirs)
 include(LXQtPreventInSourceBuilds)
 include(LXQtConfigVars)

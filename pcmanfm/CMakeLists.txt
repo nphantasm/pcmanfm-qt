@@ -90,9 +90,19 @@ target_include_directories(pcmanfm-qt
 target_link_libraries(pcmanfm-qt
     Qt6::Widgets
     Qt6::DBus
-    LayerShellQtInterface
     fm-qt6
 )
+
+if(ENABLE_LAYERSHELL_SUPPORT AND NOT LayerShellQt_FOUND)
+	message(FATAL_ERROR "Support for Wayland desktop support enabled, but layer-shell-qt not found")
+endif()
+
+if(ENABLE_LAYERSHELL_SUPPORT AND LayerShellQt_FOUND)
+	target_link_libraries(pcmanfm-qt LayerShellQtInterface)
+	target_compile_definitions(pcmanfm-qt PRIVATE ENABLE_LAYERSHELL=1)
+else()
+	target_compile_definitions(pcmanfm-qt PRIVATE ENABLE_LAYERSHELL=0)
+endif()
 
 install(TARGETS pcmanfm-qt RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 

@@ -45,8 +45,10 @@
 
 #include <algorithm>
 
+#if ENABLE_LAYERSHELL
 #include <LayerShellQt/shell.h>
 #include <LayerShellQt/window.h>
+#endif // ENABLE_LAYERSHELL
 
 #include "./application.h"
 #include "mainwindow.h"
@@ -199,6 +201,7 @@ DesktopWindow::DesktopWindow(int screenNum, const QString& screenName):
     shortcut = new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Delete), this); // force delete
     connect(shortcut, &QShortcut::activated, this, &DesktopWindow::onDeleteActivated);
 
+#if ENABLE_LAYERSHELL
     // under Wayland, set the layer and anchors as well as window transparency
     if(static_cast<Application*>(qApp)->underWayland()) {
         setAttribute(Qt::WA_TranslucentBackground);
@@ -217,6 +220,7 @@ DesktopWindow::DesktopWindow(int screenNum, const QString& screenName):
             }
         }
     }
+#endif // ENABLE_LAYERSHELL
 }
 
 DesktopWindow::~DesktopWindow() {
